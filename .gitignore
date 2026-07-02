@@ -1,0 +1,14 @@
+# Beroenden
+node_modules/
+
+# Miljövariabler och privata konfigurationer
+.env
+config.json
+
+# Operativsystem-specifika filer
+.DS_Store
+Thumbs.db
+
+# Byggfiler
+dist/
+build/

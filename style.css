@@ -1,0 +1,262 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --farg-a: #2e7d32;
+  --farg-a-ljus: #e8f5e9;
+  --farg-b: #1565c0;
+  --farg-b-ljus: #e3f2fd;
+  --bakgrund: #f4f5f7;
+  --kort-bakgrund: #ffffff;
+  --text: #1f2933;
+  --text-svag: #6b7280;
+  --kant: #e5e7eb;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bakgrund);
+  color: var(--text);
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 24px 0 12px;
+}
+
+.banner {
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 14px 20px;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.banner.pass-a { background: var(--farg-a); }
+.banner.pass-b { background: var(--farg-b); }
+
+.kort {
+  background: var(--kort-bakgrund);
+  border: 1px solid var(--kant);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Statistik */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  background: var(--bakgrund);
+  border-radius: 10px;
+  padding: 12px 4px;
+}
+
+.stat-varde {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.stat-etikett {
+  font-size: 0.8rem;
+  color: var(--text-svag);
+}
+
+/* Formulär */
+.falt {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.falt-rad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-svag);
+}
+
+input, select {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid var(--kant);
+  border-radius: 8px;
+  background: #fff;
+  width: 100%;
+}
+
+input[type="file"] {
+  padding: 8px;
+  font-size: 0.9rem;
+}
+
+button.primar {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--text);
+  color: #fff;
+  cursor: pointer;
+}
+
+button.primar:hover {
+  opacity: 0.9;
+}
+
+.ovning-forhandsvisning {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  border: 1px solid var(--kant);
+}
+
+/* Historik */
+#historik {
+  list-style: none;
+}
+
+#historik li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--kant);
+}
+
+#historik li:last-child {
+  border-bottom: none;
+}
+
+.badge {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  color: #fff;
+}
+
+.badge.pass-a { background: var(--farg-a); }
+.badge.pass-b { background: var(--farg-b); }
+
+.historik-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.historik-ovning {
+  font-weight: 600;
+}
+
+.historik-detaljer {
+  font-size: 0.85rem;
+  color: var(--text-svag);
+}
+
+.ta-bort {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  color: #c62828;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.tom-text {
+  color: var(--text-svag);
+  font-style: italic;
+}
+
+/* Maskiner */
+.maskin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.maskin-kort {
+  border: 1px solid var(--kant);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.maskin-kort img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.maskin-kort-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.maskin-kort-namn {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.maskin-kort .badge {
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+}
+
+.maskin-kort.pass-a-kant { border-top: 3px solid var(--farg-a); }
+.maskin-kort.pass-b-kant { border-top: 3px solid var(--farg-b); }
+
+/* Mobil */
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

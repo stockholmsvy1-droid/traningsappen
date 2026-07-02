@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Träningsappen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Träningsappen</h1>
+    <div id="nasta-pass-banner" class="banner"></div>
+  </header>
+
+  <main>
+    <section class="kort" id="statistik">
+      <h2>Statistik</h2>
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-varde" id="stat-vecka">0</span><span class="stat-etikett">Denna vecka</span></div>
+        <div class="stat"><span class="stat-varde" id="stat-totalt">0</span><span class="stat-etikett">Totalt</span></div>
+        <div class="stat"><span class="stat-varde" id="stat-a">0</span><span class="stat-etikett">Pass A</span></div>
+        <div class="stat"><span class="stat-varde" id="stat-b">0</span><span class="stat-etikett">Pass B</span></div>
+      </div>
+    </section>
+
+    <section class="kort" id="loggning">
+      <h2>Logga pass</h2>
+      <form id="logg-form">
+        <div class="falt">
+          <label for="passtyp">Passtyp</label>
+          <select id="passtyp" required>
+            <option value="A">A – Ben + Balans</option>
+            <option value="B">B – Överkropp + Mage</option>
+          </select>
+        </div>
+        <div class="falt">
+          <label for="ovning">Övning</label>
+          <select id="ovning" required></select>
+        </div>
+        <img id="ovning-bild" class="ovning-forhandsvisning" alt="Vald övning" hidden>
+        <div class="falt-rad">
+          <div class="falt">
+            <label for="set">Set</label>
+            <input type="number" id="set" min="1" value="3" required>
+          </div>
+          <div class="falt">
+            <label for="reps">Reps</label>
+            <input type="number" id="reps" min="1" value="10" required>
+          </div>
+          <div class="falt">
+            <label for="vikt">Vikt (kg)</label>
+            <input type="number" id="vikt" min="0" step="0.5" required>
+          </div>
+        </div>
+        <div class="falt">
+          <label for="datum">Datum</label>
+          <input type="date" id="datum" required>
+        </div>
+        <button type="submit" class="primar">Logga pass</button>
+      </form>
+    </section>
+
+    <section class="kort" id="historik-sektion">
+      <h2>Historik</h2>
+      <ul id="historik"></ul>
+      <p id="historik-tom" class="tom-text">Inga pass loggade ännu.</p>
+    </section>
+
+    <section class="kort" id="maskiner-sektion">
+      <h2>Maskiner</h2>
+      <div id="maskin-grid" class="maskin-grid"></div>
+
+      <h3>Lägg till ny maskin</h3>
+      <form id="maskin-form">
+        <div class="falt">
+          <label for="maskin-namn">Namn</label>
+          <input type="text" id="maskin-namn" required>
+        </div>
+        <div class="falt">
+          <label for="maskin-pass">Passtyp</label>
+          <select id="maskin-pass" required>
+            <option value="A">A – Ben + Balans</option>
+            <option value="B">B – Överkropp + Mage</option>
+          </select>
+        </div>
+        <div class="falt">
+          <label for="maskin-bild">Bild</label>
+          <input type="file" id="maskin-bild" accept="image/*">
+        </div>
+        <button type="submit" class="primar">Lägg till maskin</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
