@@ -5,10 +5,13 @@
 }
 
 :root {
-  --farg-a: #2e7d32;
-  --farg-a-ljus: #e8f5e9;
-  --farg-b: #1565c0;
-  --farg-b-ljus: #e3f2fd;
+  /* Passtypsfärger: index i passtypslistan avgör färg (cyklar efter 6) */
+  --farg-0: #2e7d32;
+  --farg-1: #1565c0;
+  --farg-2: #ef6c00;
+  --farg-3: #6a1b9a;
+  --farg-4: #00695c;
+  --farg-5: #ad1457;
   --bakgrund: #f4f5f7;
   --kort-bakgrund: #ffffff;
   --text: #1f2933;
@@ -16,23 +19,27 @@
   --kant: #e5e7eb;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: var(--bakgrund);
   color: var(--text);
   line-height: 1.5;
-  max-width: 700px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 12px;
 }
 
@@ -47,15 +54,27 @@ h3 {
 }
 
 .banner {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   padding: 14px 20px;
   border-radius: 12px;
   color: #fff;
 }
 
-.banner.pass-a { background: var(--farg-a); }
-.banner.pass-b { background: var(--farg-b); }
+/* Passtypsfärger för banner och badges */
+.banner.farg-0, .badge.farg-0, .passtyp-chip.farg-0 { background: var(--farg-0); }
+.banner.farg-1, .badge.farg-1, .passtyp-chip.farg-1 { background: var(--farg-1); }
+.banner.farg-2, .badge.farg-2, .passtyp-chip.farg-2 { background: var(--farg-2); }
+.banner.farg-3, .badge.farg-3, .passtyp-chip.farg-3 { background: var(--farg-3); }
+.banner.farg-4, .badge.farg-4, .passtyp-chip.farg-4 { background: var(--farg-4); }
+.banner.farg-5, .badge.farg-5, .passtyp-chip.farg-5 { background: var(--farg-5); }
+
+.maskin-kort.kant-farg-0 { border-top: 3px solid var(--farg-0); }
+.maskin-kort.kant-farg-1 { border-top: 3px solid var(--farg-1); }
+.maskin-kort.kant-farg-2 { border-top: 3px solid var(--farg-2); }
+.maskin-kort.kant-farg-3 { border-top: 3px solid var(--farg-3); }
+.maskin-kort.kant-farg-4 { border-top: 3px solid var(--farg-4); }
+.maskin-kort.kant-farg-5 { border-top: 3px solid var(--farg-5); }
 
 .kort {
   background: var(--kort-bakgrund);
@@ -65,10 +84,61 @@ h3 {
   margin-bottom: 20px;
 }
 
+/* Ihopfällbara sektioner */
+.sektion > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.sektion > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sektion > summary h2 {
+  margin-bottom: 0;
+}
+
+.sektion > summary::after {
+  content: "▾";
+  color: var(--text-svag);
+  transition: transform 0.2s ease;
+}
+
+.sektion:not([open]) > summary::after {
+  transform: rotate(-90deg);
+}
+
+.sektion[open] > summary {
+  margin-bottom: 16px;
+}
+
+/* Hjälptext */
+.hjalp summary {
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.hjalp[open] summary {
+  margin-bottom: 12px;
+}
+
+.hjalp ol {
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
 /* Statistik */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 12px;
   text-align: center;
 }
@@ -100,7 +170,7 @@ h3 {
 
 .falt-rad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: 12px;
 }
 
@@ -118,6 +188,7 @@ input, select {
   border-radius: 8px;
   background: #fff;
   width: 100%;
+  min-height: 44px; /* bekväm träffyta på pekskärm */
 }
 
 input[type="file"] {
@@ -135,10 +206,32 @@ button.primar {
   background: var(--text);
   color: #fff;
   cursor: pointer;
+  min-height: 44px;
 }
 
 button.primar:hover {
   opacity: 0.9;
+}
+
+button.sekundar {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border: 1px solid var(--kant);
+  border-radius: 8px;
+  background: var(--bakgrund);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button.sekundar:hover {
+  background: var(--kant);
+}
+
+.sektion-rad {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
 }
 
 .ovning-forhandsvisning {
@@ -148,6 +241,23 @@ button.primar:hover {
   border-radius: 10px;
   margin-bottom: 14px;
   border: 1px solid var(--kant);
+}
+
+/* Passtyper */
+.passtyp-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.passtyp-chip {
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
 }
 
 /* Historik */
@@ -179,9 +289,6 @@ button.primar:hover {
   color: #fff;
 }
 
-.badge.pass-a { background: var(--farg-a); }
-.badge.pass-b { background: var(--farg-b); }
-
 .historik-info {
   flex: 1;
   min-width: 0;
@@ -189,6 +296,7 @@ button.primar:hover {
 
 .historik-ovning {
   font-weight: 600;
+  overflow-wrap: break-word;
 }
 
 .historik-detaljer {
@@ -196,14 +304,49 @@ button.primar:hover {
   color: var(--text-svag);
 }
 
+/* Små, diskreta ta bort-knappar */
 .ta-bort {
   flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  background: none;
-  color: #c62828;
-  font-size: 1.2rem;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-svag);
+  font-size: 0.75rem;
+  line-height: 1;
   cursor: pointer;
-  padding: 6px;
+  opacity: 0.7;
+}
+
+.ta-bort:hover {
+  background: #ffebee;
+  color: #c62828;
+  opacity: 1;
+}
+
+.chip-ta-bort {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.7rem;
+  line-height: 1;
+  margin-left: 6px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.chip-ta-bort:hover {
+  color: #fff;
+}
+
+.medd {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #c62828;
 }
 
 .tom-text {
@@ -214,8 +357,8 @@ button.primar:hover {
 /* Maskiner */
 .maskin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .maskin-kort {
@@ -225,38 +368,90 @@ button.primar:hover {
   background: #fff;
 }
 
-.maskin-kort img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  display: block;
-}
-
-.maskin-kort-info {
+.maskin-header-rad {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 6px;
-  padding: 8px 10px;
+  padding-right: 10px;
+}
+
+.maskin-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.95rem;
+  min-height: 44px;
+}
+
+.maskin-header:disabled {
+  cursor: default;
 }
 
 .maskin-kort-namn {
-  font-size: 0.85rem;
+  flex: 1;
   font-weight: 600;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
-.maskin-kort .badge {
-  width: 24px;
-  height: 24px;
-  font-size: 0.75rem;
+.maskin-header .badge {
+  width: 26px;
+  height: 26px;
+  font-size: 0.78rem;
 }
 
-.maskin-kort.pass-a-kant { border-top: 3px solid var(--farg-a); }
-.maskin-kort.pass-b-kant { border-top: 3px solid var(--farg-b); }
+.chevron {
+  color: var(--text-svag);
+  transition: transform 0.2s ease;
+}
 
-/* Mobil */
-@media (max-width: 480px) {
+.chevron.oppen {
+  transform: rotate(180deg);
+}
+
+.maskin-bild-wrap img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  display: block;
+  border-top: 1px solid var(--kant);
+}
+
+/* ===== Responsivitet ===== */
+
+/* Större skärmar: mer luft och maskingrid i två kolumner */
+@media (min-width: 640px) {
+  body {
+    padding: 24px 16px;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  .maskin-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .falt-rad {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Riktigt små skärmar: kompaktare statistik */
+@media (max-width: 360px) {
   .stat-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kort {
+    padding: 14px;
   }
 }

@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Träningsappen</title>
+  <meta name="theme-color" content="#1f2933">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Träning">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" href="icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,14 +20,22 @@
   </header>
 
   <main>
+    <details class="kort hjalp">
+      <summary>❓ Så använder du appen</summary>
+      <ol>
+        <li><strong>Bannern</strong> högst upp visar vilket pass som står på tur — appen växlar automatiskt till nästa passtyp efter varje loggat pass.</li>
+        <li><strong>Logga ett pass:</strong> välj passtyp och övning (listan visar bara övningar för vald passtyp), fyll i set, reps och vikt och tryck på <em>Logga pass</em>. Datumet är förifyllt med dagens datum.</li>
+        <li><strong>Historiken</strong> visar dina loggade pass, nyast först. Tryck på ✕ för att ta bort en rad — statistiken uppdateras direkt.</li>
+        <li><strong>Egna passtyper:</strong> under <em>Passtyper</em> kan du lägga till helt nya pass (t.ex. "Kondition"). De får automatiskt nästa bokstav (C, D …) och en egen färg, och dyker upp i alla listor. Egna passtyper tas bort med ✕ på sin bricka — så länge de inte används av loggade pass eller maskiner.</li>
+        <li><strong>Minimera sektioner:</strong> tryck på rubrikerna <em>Historik</em>, <em>Passtyper</em> eller <em>Maskiner</em> för att fälla ihop respektive sektion.</li>
+        <li><strong>Maskiner:</strong> tryck på en maskins namn för att visa eller dölja dess bild, eller använd knappen <em>Visa alla bilder</em>. Du kan lägga till egna maskiner med bild, och ta bort en maskin med ✕-knappen på dess kort — borttagningen sparas permanent.</li>
+        <li>All data sparas lokalt i webbläsaren (localStorage) och finns kvar när du laddar om sidan.</li>
+      </ol>
+    </details>
+
     <section class="kort" id="statistik">
       <h2>Statistik</h2>
-      <div class="stat-grid">
-        <div class="stat"><span class="stat-varde" id="stat-vecka">0</span><span class="stat-etikett">Denna vecka</span></div>
-        <div class="stat"><span class="stat-varde" id="stat-totalt">0</span><span class="stat-etikett">Totalt</span></div>
-        <div class="stat"><span class="stat-varde" id="stat-a">0</span><span class="stat-etikett">Pass A</span></div>
-        <div class="stat"><span class="stat-varde" id="stat-b">0</span><span class="stat-etikett">Pass B</span></div>
-      </div>
+      <div class="stat-grid" id="stat-grid"></div>
     </section>
 
     <section class="kort" id="loggning">
@@ -28,10 +43,7 @@
       <form id="logg-form">
         <div class="falt">
           <label for="passtyp">Passtyp</label>
-          <select id="passtyp" required>
-            <option value="A">A – Ben + Balans</option>
-            <option value="B">B – Överkropp + Mage</option>
-          </select>
+          <select id="passtyp" required></select>
         </div>
         <div class="falt">
           <label for="ovning">Övning</label>
@@ -60,14 +72,32 @@
       </form>
     </section>
 
-    <section class="kort" id="historik-sektion">
-      <h2>Historik</h2>
+    <details class="kort sektion" id="historik-sektion" open>
+      <summary><h2>Historik</h2></summary>
       <ul id="historik"></ul>
       <p id="historik-tom" class="tom-text">Inga pass loggade ännu.</p>
-    </section>
+    </details>
 
-    <section class="kort" id="maskiner-sektion">
-      <h2>Maskiner</h2>
+    <details class="kort sektion" id="passtyper-sektion" open>
+      <summary><h2>Passtyper</h2></summary>
+      <div id="passtyp-lista" class="passtyp-lista"></div>
+      <p id="passtyp-medd" class="medd" hidden></p>
+
+      <h3>Lägg till ny passtyp</h3>
+      <form id="passtyp-form">
+        <div class="falt">
+          <label for="passtyp-namn">Namn (t.ex. "Kondition")</label>
+          <input type="text" id="passtyp-namn" required>
+        </div>
+        <button type="submit" class="primar">Lägg till passtyp</button>
+      </form>
+    </details>
+
+    <details class="kort sektion" id="maskiner-sektion" open>
+      <summary><h2>Maskiner</h2></summary>
+      <div class="sektion-rad">
+        <button type="button" id="toggla-bilder" class="sekundar">Visa alla bilder</button>
+      </div>
       <div id="maskin-grid" class="maskin-grid"></div>
 
       <h3>Lägg till ny maskin</h3>
@@ -78,10 +108,7 @@
         </div>
         <div class="falt">
           <label for="maskin-pass">Passtyp</label>
-          <select id="maskin-pass" required>
-            <option value="A">A – Ben + Balans</option>
-            <option value="B">B – Överkropp + Mage</option>
-          </select>
+          <select id="maskin-pass" required></select>
         </div>
         <div class="falt">
           <label for="maskin-bild">Bild</label>
@@ -89,9 +116,17 @@
         </div>
         <button type="submit" class="primar">Lägg till maskin</button>
       </form>
-    </section>
+    </details>
   </main>
 
   <script src="script.js"></script>
+  <script>
+    // Registrerar service worker så appen fungerar offline i gymmet.
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>
