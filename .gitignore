@@ -12,3 +12,6 @@ Thumbs.db
 # Byggfiler
 dist/
 build/
+
+# Lokala instruktionsfiler (pushas inte)
+PUBLICERA_*.md
