@@ -54,11 +54,24 @@ h3 {
 }
 
 .banner {
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 20px;
   border-radius: 12px;
   color: #fff;
+}
+
+.banner-etikett {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+.banner-pass {
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 
 /* Passtypsfärger för banner och badges */

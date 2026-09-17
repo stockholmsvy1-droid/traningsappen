@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.7";
+const APP_VERSION = "1.8";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -94,13 +94,16 @@ function passFargKlass(typId) {
   return "farg-" + (index >= 0 ? index % 6 : 0);
 }
 
+// Förslaget roterar bara mellan styrketräningspassen (standardpasstyperna
+// A och B). Egna passtyper som löpning och promenad ingår inte i turordningen
+// — dem väljer man när man vill.
 function nastaPass() {
-  const typer = allaPassTyper();
-  const pass = lasPass();
-  if (pass.length === 0) return typer[0].id;
-  const senaste = pass.reduce((a, b) => (b.datum >= a.datum ? b : a));
-  const index = typer.findIndex(t => t.id === senaste.passTyp);
-  return typer[(index + 1) % typer.length].id;
+  const styrkepass = STANDARD_PASSTYPER;
+  const loggade = lasPass().filter(p => styrkepass.some(t => t.id === p.passTyp));
+  if (loggade.length === 0) return styrkepass[0].id;
+  const senaste = loggade.reduce((a, b) => (b.datum >= a.datum ? b : a));
+  const index = styrkepass.findIndex(t => t.id === senaste.passTyp);
+  return styrkepass[(index + 1) % styrkepass.length].id;
 }
 
 // Det pass som är igång just nu: passtypen för den senaste loggningen med
@@ -157,8 +160,17 @@ function renderaBanner() {
   const banner = document.getElementById("nasta-pass-banner");
   const pagar = pagaendePass();
   const typ = pagar || nastaPass();
-  const etikett = passEtikett(typ).replace(" – ", " (") + ")";
-  banner.textContent = (pagar ? "Pågår: " : "Nästa pass: ") + etikett;
+
+  // Två rader: etiketten är lång, och en radbrytning mitt i passnamnet
+  // ("... B / (Överkropp + Mage)") läser sig illa.
+  banner.innerHTML = "";
+  const rubrik = document.createElement("span");
+  rubrik.className = "banner-etikett";
+  rubrik.textContent = pagar ? "Pågår" : "Nästa styrketräningspass";
+  const namn = document.createElement("span");
+  namn.className = "banner-pass";
+  namn.textContent = passEtikett(typ).replace(" – ", " (") + ")";
+  banner.append(rubrik, namn);
   banner.className = "banner " + passFargKlass(typ);
 }
 

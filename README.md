@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.8** — bannern heter "Nästa styrketräningspass" och roterar bara mellan A
+  och B. Egna passtyper (löpning, promenad, stretching, hemmaövningar) ingår
+  inte längre i turordningen och stör den inte heller när de loggas emellan.
+  Bannern sätts i två rader så att passnamnet inte bryts mitt itu.
 - **1.7** — Logga pass är öppen från start igen (den används oftast och kostade
   ett extra tryck per appstart), och Statistik har flyttats ned under den.
 - **1.6** — alla avsnitt är hopfällda när appen startar, så startskärmen blir en
