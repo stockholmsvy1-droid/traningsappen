@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **2.1** — rättar att en skriven notering försvann tyst. Hoppet från en
+  momentbild till loggningen rensade noteringsfältet, så en kommentar skriven
+  innan momentet valdes kastades utan förvarning. Vikten rensas fortfarande —
+  den hör till det moment man lämnade.
 - **2.0** — kontrollfråga även när en historikrad tas bort; frågan återger vad
   raden innehåller så man ser om man tryckt på fel rad. Säkerhetskopiering
   flyttad längst ned, under Moment. (Numret hoppar till 2.0 i stället för 1.10,

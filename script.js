@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "2.0";
+const APP_VERSION = "2.1";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -362,8 +362,9 @@ function loggaMaskin(maskin) {
   renderaOvningsbild();
   document.getElementById("loggning").scrollIntoView({ behavior: "smooth", block: "start" });
   const vikt = document.getElementById("vikt");
-  vikt.value = "";
-  document.getElementById("notering").value = "";
+  vikt.value = ""; // vikten hör till momentet man lämnade, inte det man valde
+  // Noteringen rensas INTE här. Den kan vara skriven innan momentet valdes,
+  // och att kasta den tyst gjorde att kommentarer försvann utan förvarning.
   setTimeout(() => vikt.focus({ preventScroll: true }), 400);
 }
 
