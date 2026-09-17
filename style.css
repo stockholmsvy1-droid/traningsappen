@@ -565,3 +565,18 @@ button.sekundar:hover {
 .medd.fel {
   color: #c62828;
 }
+
+/* Appikonen intill titeln — gör appen till "sin egen" på hemskärmen */
+header h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.app-ikon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}

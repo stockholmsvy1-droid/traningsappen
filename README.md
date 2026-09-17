@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.6** — alla avsnitt är hopfällda när appen startar, så startskärmen blir en
+  innehållsförteckning i stället för en lång rulle. Statistik och Logga pass är
+  numera också hopfällbara. Logga pass fälls ut automatiskt när man trycker på
+  en momentbild eller på ✎ i historiken. Appikonen visas intill titeln.
 - **1.5** — säkerhetskopiering: exportera all data till en JSON-fil (eller till
   urklipp som reserv på iOS) och läs tillbaka den igen. Historiken går att
   redigera i efterhand — ✎ på en rad öppnar den i loggningsformuläret, och

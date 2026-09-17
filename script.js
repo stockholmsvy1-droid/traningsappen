@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.5";
+const APP_VERSION = "1.6";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -335,8 +335,13 @@ function renderaHistorik() {
 
 // Väljer en maskin i loggningsformuläret och rullar dit, så att man kan gå
 // direkt från maskinbilden till att logga just den övningen.
+function oppnaLoggning() {
+  document.getElementById("loggning").open = true;
+}
+
 function loggaMaskin(maskin) {
   if (redigerarId !== null) avslutaRedigering();
+  oppnaLoggning();
   const passtyp = document.getElementById("passtyp");
   passtyp.value = maskin.pass;
   renderaOvningsdropdown();
@@ -461,6 +466,7 @@ function startaRedigering(id) {
   const rad = lasPass().find(p => p.id === id);
   if (!rad) return;
   redigerarId = id;
+  oppnaLoggning();
 
   const passtyp = document.getElementById("passtyp");
   passtyp.value = rad.passTyp;
