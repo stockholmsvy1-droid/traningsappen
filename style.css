@@ -127,6 +127,14 @@ h3 {
   margin-bottom: 12px;
 }
 
+/* Versionsnummer i hjälptextens rubrikrad */
+.hjalp .version {
+  float: right;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text-svag);
+}
+
 .hjalp ol {
   padding-left: 22px;
   display: flex;
@@ -422,6 +430,16 @@ button.sekundar:hover {
   object-fit: cover;
   display: block;
   border-top: 1px solid var(--kant);
+}
+
+/* Bilden är en genväg: tryck på den för att logga just den övningen. */
+.maskin-bild-klickbar {
+  cursor: pointer;
+}
+
+.maskin-bild-klickbar:focus-visible {
+  outline: 3px solid var(--farg-1);
+  outline-offset: -3px;
 }
 
 /* ===== Responsivitet ===== */

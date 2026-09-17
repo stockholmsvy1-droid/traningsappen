@@ -24,9 +24,23 @@ telefonen syns inte på datorn, och tvärtom.
 ## Teknik
 
 Ren HTML, CSS och JavaScript. Inget byggsteg, inga beroenden.
-`sw.js` är en service worker som cachar appen för offline-läge — höj
-`CACHE_VERSION` där när du ändrat index.html, script.js eller style.css,
-annars fortsätter telefonen visa den gamla versionen.
+
+Versionsnumret visas i appen, till höger i hjälptextens rubrikrad. Det bor
+på två ställen som alltid ska ha samma nummer:
+
+- `APP_VERSION` i `script.js` — det som visas
+- `CACHE_VERSION` i `sw.js` — det som får telefonen att hämta nya filer
+
+Höj båda vid varje publicerad ändring. Glömmer du `CACHE_VERSION` fortsätter
+telefonen visa den gamla versionen även efter push.
+
+## Versionshistorik
+
+- **1.1** — passtypen står kvar under passet i stället för att hoppa vidare
+  efter varje loggning; bannern visar "Pågår" när du redan tränat idag;
+  tryck på en maskinbild för att hoppa till loggningen med övningen vald;
+  versionsnumret syns i appen.
+- **1.0** — första publicerade versionen.
 
 ## Proveniens
 

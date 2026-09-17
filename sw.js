@@ -1,7 +1,8 @@
 // Service worker för Träningsappen.
 // Cache-first: appen fungerar helt utan nät i gymmet.
-// Höj CACHE_VERSION när du ändrar index.html, script.js eller style.css.
-const CACHE_VERSION = "traningsappen-v1";
+// Numret ska alltid matcha APP_VERSION i script.js — höj båda samtidigt,
+// annars fortsätter telefonen visa den gamla versionen.
+const CACHE_VERSION = "traningsappen-v1.1";
 
 const FILER = [
   "./",

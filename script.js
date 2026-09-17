@@ -1,3 +1,8 @@
+// ===== Version =====
+// Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
+// SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
+const APP_VERSION = "1.1";
+
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
 const STANDARD_PASSTYPER = [
@@ -89,6 +94,21 @@ function nastaPass() {
   return typer[(index + 1) % typer.length].id;
 }
 
+// Det pass som är igång just nu: passtypen för den senaste loggningen med
+// dagens datum. Returnerar null om inget är loggat idag.
+function pagaendePass() {
+  const idag = idagISO();
+  const idagsPass = lasPass().filter(p => p.datum === idag);
+  if (idagsPass.length === 0) return null;
+  const senaste = idagsPass.reduce((a, b) => (b.id >= a.id ? b : a));
+  return allaPassTyper().some(t => t.id === senaste.passTyp) ? senaste.passTyp : null;
+}
+
+// Vilken passtyp formuläret ska stå på när appen laddas.
+function startPass() {
+  return pagaendePass() || nastaPass();
+}
+
 function idagISO() {
   const d = new Date();
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
@@ -111,8 +131,10 @@ let visaAllaBilder = false;
 // ===== Rendering =====
 function renderaBanner() {
   const banner = document.getElementById("nasta-pass-banner");
-  const typ = nastaPass();
-  banner.textContent = `Nästa pass: ${passEtikett(typ).replace(" – ", " (")})`;
+  const pagar = pagaendePass();
+  const typ = pagar || nastaPass();
+  const etikett = passEtikett(typ).replace(" – ", " (") + ")";
+  banner.textContent = (pagar ? "Pågår: " : "Nästa pass: ") + etikett;
   banner.className = "banner " + passFargKlass(typ);
 }
 
@@ -265,6 +287,21 @@ function renderaHistorik() {
   });
 }
 
+// Väljer en maskin i loggningsformuläret och rullar dit, så att man kan gå
+// direkt från maskinbilden till att logga just den övningen.
+function loggaMaskin(maskin) {
+  const passtyp = document.getElementById("passtyp");
+  passtyp.value = maskin.pass;
+  renderaOvningsdropdown();
+  const ovning = document.getElementById("ovning");
+  ovning.value = maskin.id;
+  renderaOvningsbild();
+  document.getElementById("loggning").scrollIntoView({ behavior: "smooth", block: "start" });
+  const vikt = document.getElementById("vikt");
+  vikt.value = "";
+  setTimeout(() => vikt.focus({ preventScroll: true }), 400);
+}
+
 function renderaMaskinGrid() {
   const grid = document.getElementById("maskin-grid");
   grid.innerHTML = "";
@@ -312,6 +349,18 @@ function renderaMaskinGrid() {
       bild.src = m.bild;
       bild.alt = m.namn;
       bild.loading = "lazy";
+      bild.className = "maskin-bild-klickbar";
+      bild.tabIndex = 0;
+      bild.setAttribute("role", "button");
+      bild.title = "Logga " + m.namn;
+      bild.setAttribute("aria-label", "Logga " + m.namn);
+      bild.addEventListener("click", () => loggaMaskin(m));
+      bild.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          loggaMaskin(m);
+        }
+      });
       bildWrap.appendChild(bild);
 
       header.addEventListener("click", () => {
@@ -361,8 +410,6 @@ function renderaAllt() {
 function taBortPass(id) {
   sparaPass(lasPass().filter(p => p.id !== id));
   renderaAllt();
-  document.getElementById("passtyp").value = nastaPass();
-  renderaOvningsdropdown();
 }
 
 function taBortPassTyp(id) {
@@ -379,8 +426,6 @@ function taBortPassTyp(id) {
   sparaEgnaPassTyper(lasEgnaPassTyper().filter(t => t.id !== id));
   visaPassTypMedd("");
   renderaAllt();
-  document.getElementById("passtyp").value = nastaPass();
-  renderaOvningsdropdown();
 }
 
 function taBortMaskin(id) {
@@ -416,8 +461,6 @@ document.getElementById("logg-form").addEventListener("submit", e => {
   });
   sparaPass(pass);
   renderaAllt();
-  document.getElementById("passtyp").value = nastaPass();
-  renderaOvningsdropdown();
   document.getElementById("vikt").value = "";
 });
 
@@ -475,7 +518,8 @@ document.getElementById("toggla-bilder").addEventListener("click", () => {
 });
 
 // ===== Init =====
+document.getElementById("app-version").textContent = "v" + APP_VERSION;
 document.getElementById("datum").value = idagISO();
 renderaAllt();
-document.getElementById("passtyp").value = nastaPass();
+document.getElementById("passtyp").value = startPass();
 renderaOvningsdropdown();
