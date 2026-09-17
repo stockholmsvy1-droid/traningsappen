@@ -189,7 +189,7 @@ label {
   color: var(--text-svag);
 }
 
-input, select {
+input, select, textarea {
   font-size: 1rem;
   padding: 10px;
   border: 1px solid var(--kant);
@@ -197,6 +197,12 @@ input, select {
   background: #fff;
   width: 100%;
   min-height: 44px; /* bekväm träffyta på pekskärm */
+}
+
+textarea {
+  font-family: inherit;
+  line-height: 1.4;
+  resize: vertical;
 }
 
 input[type="file"] {
@@ -472,4 +478,16 @@ button.sekundar:hover {
   .kort {
     padding: 14px;
   }
+}
+
+/* Fritextnotering på en loggad rad */
+.historik-notering {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bakgrund);
+  border-left: 3px solid var(--kant);
+  border-radius: 4px;
+  padding: 6px 10px;
+  white-space: pre-wrap;
 }

@@ -24,11 +24,11 @@
       <summary>❓ Så använder du appen<span class="version" id="app-version"></span></summary>
       <ol>
         <li><strong>Bannern</strong> högst upp visar vilket pass som står på tur. Har du redan loggat något idag visar den i stället vilket pass du håller på med. Passtypen i formuläret står kvar tills du byter den själv.</li>
-        <li><strong>Logga ett pass:</strong> välj passtyp och övning (listan visar bara övningar för vald passtyp), fyll i set, reps och vikt och tryck på <em>Logga pass</em>. Datumet är förifyllt med dagens datum.</li>
+        <li><strong>Logga ett pass:</strong> välj passtyp och moment (listan visar bara moment för vald passtyp) och tryck på <em>Logga pass</em>. Datumet är förifyllt med dagens datum. Set, reps och vikt är frivilliga — lämna dem tomma när de inte passar, till exempel på en löprunda, så utelämnas de ur historiken.</li>
         <li><strong>Historiken</strong> visar dina loggade pass, nyast först. Tryck på ✕ för att ta bort en rad — statistiken uppdateras direkt.</li>
-        <li><strong>Egna passtyper:</strong> under <em>Passtyper</em> kan du lägga till helt nya pass (t.ex. "Kondition"). De får automatiskt nästa bokstav (C, D …) och en egen färg, och dyker upp i alla listor. Egna passtyper tas bort med ✕ på sin bricka — så länge de inte används av loggade pass eller maskiner.</li>
-        <li><strong>Minimera sektioner:</strong> tryck på rubrikerna <em>Historik</em>, <em>Passtyper</em> eller <em>Maskiner</em> för att fälla ihop respektive sektion.</li>
-        <li><strong>Maskiner:</strong> tryck på en maskins namn för att visa eller dölja dess bild, eller använd knappen <em>Visa alla bilder</em>. Tryck på <strong>själva bilden</strong> för att hoppa upp till loggningen med den övningen redan vald. Du kan lägga till egna maskiner med bild, och ta bort en maskin med ✕-knappen på dess kort — borttagningen sparas permanent.</li>
+        <li><strong>Egna passtyper:</strong> under <em>Passtyper</em> kan du lägga till helt nya pass (t.ex. "Kondition"). De får automatiskt nästa bokstav (C, D …) och en egen färg, och dyker upp i alla listor. Egna passtyper tas bort med ✕ på sin bricka — så länge de inte används av loggade pass eller moment.</li>
+        <li><strong>Minimera sektioner:</strong> tryck på rubrikerna <em>Historik</em>, <em>Passtyper</em> eller <em>Moment</em> för att fälla ihop respektive sektion.</li>
+        <li><strong>Moment:</strong> ett moment är en maskin, en övning eller en aktivitet — Leg Extension, stretching eller en löprunda. Tryck på momentets namn för att visa eller dölja dess bild, eller använd knappen <em>Visa alla bilder</em>. Tryck på <strong>själva bilden</strong> för att hoppa upp till loggningen med momentet redan valt. Du kan lägga till egna moment, med eller utan bild, och ta bort ett moment med ✕-knappen på dess kort — borttagningen sparas permanent.</li>
         <li>All data sparas lokalt i webbläsaren (localStorage) och finns kvar när du laddar om sidan.</li>
       </ol>
     </details>
@@ -46,27 +46,31 @@
           <select id="passtyp" required></select>
         </div>
         <div class="falt">
-          <label for="ovning">Övning</label>
+          <label for="ovning">Moment</label>
           <select id="ovning" required></select>
         </div>
-        <img id="ovning-bild" class="ovning-forhandsvisning" alt="Vald övning" hidden>
+        <img id="ovning-bild" class="ovning-forhandsvisning" alt="Valt moment" hidden>
         <div class="falt-rad">
           <div class="falt">
             <label for="set">Set</label>
-            <input type="number" id="set" min="1" value="3" required>
+            <input type="number" id="set" min="1" value="3">
           </div>
           <div class="falt">
             <label for="reps">Reps</label>
-            <input type="number" id="reps" min="1" value="10" required>
+            <input type="number" id="reps" min="1" value="10">
           </div>
           <div class="falt">
             <label for="vikt">Vikt (kg)</label>
-            <input type="number" id="vikt" min="0" step="0.5" required>
+            <input type="number" id="vikt" min="0" step="0.5">
           </div>
         </div>
         <div class="falt">
           <label for="datum">Datum</label>
           <input type="date" id="datum" required>
+        </div>
+        <div class="falt">
+          <label for="notering">Notering (frivillig)</label>
+          <textarea id="notering" rows="2" placeholder="Hur kändes det? Något att fråga fysioterapeuten om?"></textarea>
         </div>
         <button type="submit" class="primar">Logga pass</button>
       </form>
@@ -94,13 +98,13 @@
     </details>
 
     <details class="kort sektion" id="maskiner-sektion" open>
-      <summary><h2>Maskiner</h2></summary>
+      <summary><h2>Moment</h2></summary>
       <div class="sektion-rad">
         <button type="button" id="toggla-bilder" class="sekundar">Visa alla bilder</button>
       </div>
       <div id="maskin-grid" class="maskin-grid"></div>
 
-      <h3>Lägg till ny maskin</h3>
+      <h3>Lägg till nytt moment</h3>
       <form id="maskin-form">
         <div class="falt">
           <label for="maskin-namn">Namn</label>
@@ -114,7 +118,7 @@
           <label for="maskin-bild">Bild</label>
           <input type="file" id="maskin-bild" accept="image/*">
         </div>
-        <button type="submit" class="primar">Lägg till maskin</button>
+        <button type="submit" class="primar">Lägg till moment</button>
       </form>
     </details>
   </main>

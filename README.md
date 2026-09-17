@@ -1,8 +1,10 @@
 # Träningsappen
 
-Enkel webbapp för att logga gympass: passtyp, övning, set, reps och vikt.
+Enkel webbapp för att logga träningspass. Ett pass består av **moment** —
+en gymmaskin, en stretchövning eller en löprunda — och för varje moment kan
+du ange set, reps och vikt (alla frivilliga) samt en fritextnotering.
 Visar historik, veckostatistik och vilket pass som står på tur. Bilder på
-maskinerna finns inbyggda, och egna passtyper och maskiner kan läggas till.
+gymmaskinerna finns inbyggda, och egna passtyper och moment kan läggas till.
 
 **Öppna appen:** https://stockholmsvy1-droid.github.io/traningsappen/
 
@@ -36,6 +38,11 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.2** — "Maskin" och "Övning" heter numera **Moment** i hela gränssnittet,
+  så att appen fungerar lika bra för löprundor, stretching och hemmaövningar
+  som för gymmaskiner. Fritextnotering på varje loggning, synlig i historiken.
+  Set, reps och vikt är frivilliga och utelämnas ur historiken när de är tomma.
+  Lagringsnycklarna är oförändrade — ingen data gick förlorad i namnbytet.
 - **1.1** — passtypen står kvar under passet i stället för att hoppa vidare
   efter varje loggning; bannern visar "Pågår" när du redan tränat idag;
   tryck på en maskinbild för att hoppa till loggningen med övningen vald;

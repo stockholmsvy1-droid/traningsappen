@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.1";
+const APP_VERSION = "1.2";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -107,6 +107,18 @@ function pagaendePass() {
 // Vilken passtyp formuläret ska stå på när appen laddas.
 function startPass() {
   return pagaendePass() || nastaPass();
+}
+
+// Tomt talfält sparas som null, inte 0, så att historiken kan utelämna det.
+function talEllerNull(id) {
+  const text = document.getElementById(id).value.trim();
+  if (text === "") return null;
+  const n = Number(text);
+  return Number.isFinite(n) ? n : null;
+}
+
+function harVarde(v) {
+  return v !== null && v !== undefined && v !== "" && Number(v) > 0;
 }
 
 function idagISO() {
@@ -224,7 +236,7 @@ function renderaOvningsdropdown() {
   if (maskiner.length === 0) {
     const option = document.createElement("option");
     option.value = "";
-    option.textContent = "Inga övningar ännu – lägg till en maskin";
+    option.textContent = "Inga moment ännu – lägg till ett moment";
     option.disabled = true;
     option.selected = true;
     dropdown.appendChild(option);
@@ -273,8 +285,20 @@ function renderaHistorik() {
     namn.textContent = maskin ? maskin.namn : p.ovning;
     const detaljer = document.createElement("div");
     detaljer.className = "historik-detaljer";
-    detaljer.textContent = `${p.set} × ${p.reps} @ ${p.vikt} kg · ${p.datum}`;
+    let matt = "";
+    if (harVarde(p.set) && harVarde(p.reps)) matt = `${p.set} × ${p.reps}`;
+    else if (harVarde(p.set)) matt = `${p.set} set`;
+    else if (harVarde(p.reps)) matt = `${p.reps} reps`;
+    if (harVarde(p.vikt)) matt = matt ? `${matt} @ ${p.vikt} kg` : `${p.vikt} kg`;
+    detaljer.textContent = matt ? `${matt} · ${p.datum}` : p.datum;
     info.append(namn, detaljer);
+
+    if (p.notering) {
+      const notering = document.createElement("div");
+      notering.className = "historik-notering";
+      notering.textContent = p.notering;
+      info.appendChild(notering);
+    }
 
     const taBort = document.createElement("button");
     taBort.className = "ta-bort";
@@ -299,6 +323,7 @@ function loggaMaskin(maskin) {
   document.getElementById("loggning").scrollIntoView({ behavior: "smooth", block: "start" });
   const vikt = document.getElementById("vikt");
   vikt.value = "";
+  document.getElementById("notering").value = "";
   setTimeout(() => vikt.focus({ preventScroll: true }), 400);
 }
 
@@ -332,7 +357,7 @@ function renderaMaskinGrid() {
     taBort.type = "button";
     taBort.className = "ta-bort";
     taBort.textContent = "✕";
-    taBort.title = "Ta bort maskin";
+    taBort.title = "Ta bort moment";
     taBort.setAttribute("aria-label", "Ta bort " + m.namn);
     taBort.addEventListener("click", () => taBortMaskin(m.id));
 
@@ -454,14 +479,16 @@ document.getElementById("logg-form").addEventListener("submit", e => {
     id: Date.now(),
     passTyp: document.getElementById("passtyp").value,
     ovning: document.getElementById("ovning").value,
-    set: Number(document.getElementById("set").value),
-    reps: Number(document.getElementById("reps").value),
-    vikt: Number(document.getElementById("vikt").value),
+    set: talEllerNull("set"),
+    reps: talEllerNull("reps"),
+    vikt: talEllerNull("vikt"),
+    notering: document.getElementById("notering").value.trim(),
     datum: document.getElementById("datum").value
   });
   sparaPass(pass);
   renderaAllt();
   document.getElementById("vikt").value = "";
+  document.getElementById("notering").value = "";
 });
 
 document.getElementById("passtyp-form").addEventListener("submit", e => {
