@@ -38,6 +38,9 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.3** — momenten sorteras efter passtyp (A, B, C …) i stället för att egna
+  tillägg hamnar sist i skapandeordning. Inom varje passtyp ligger det senast
+  tillagda momentet sist.
 - **1.2** — "Maskin" och "Övning" heter numera **Moment** i hela gränssnittet,
   så att appen fungerar lika bra för löprundor, stretching och hemmaövningar
   som för gymmaskiner. Fritextnotering på varje loggning, synlig i historiken.

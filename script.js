@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.2";
+const APP_VERSION = "1.3";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -66,7 +66,16 @@ function sparaDoldaMaskiner(idn) {
 
 function allaMaskiner() {
   const dolda = lasDoldaMaskiner();
-  return STANDARD_MASKINER.filter(m => !dolda.includes(m.id)).concat(lasEgnaMaskiner());
+  const alla = STANDARD_MASKINER.filter(m => !dolda.includes(m.id)).concat(lasEgnaMaskiner());
+  // Grupperas efter passtyp i passtypernas ordning (A, B, C ...). Inom varje
+  // passtyp behålls den ordning de lades till, så det senast tillagda momentet
+  // hamnar sist i sin grupp. Array.sort är stabil, vilket ger det gratis.
+  const typer = allaPassTyper().map(t => t.id);
+  const ordning = m => {
+    const i = typer.indexOf(m.pass);
+    return i === -1 ? Number.MAX_SAFE_INTEGER : i; // okänd passtyp hamnar sist
+  };
+  return alla.sort((a, b) => ordning(a) - ordning(b));
 }
 
 function allaPassTyper() {

@@ -2,7 +2,7 @@
 // Cache-first: appen fungerar helt utan nät i gymmet.
 // Numret ska alltid matcha APP_VERSION i script.js — höj båda samtidigt,
 // annars fortsätter telefonen visa den gamla versionen.
-const CACHE_VERSION = "traningsappen-v1.2";
+const CACHE_VERSION = "traningsappen-v1.3";
 
 const FILER = [
   "./",
