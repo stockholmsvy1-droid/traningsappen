@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.9";
+const APP_VERSION = "2.0";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -552,9 +552,25 @@ function avslutaRedigering() {
 
 // ===== Händelser =====
 function taBortPass(id) {
-  sparaPass(lasPass().filter(p => p.id !== id));
-  if (redigerarId === id) avslutaRedigering();
-  renderaAllt();
+  const rad = lasPass().find(p => p.id === id);
+  if (!rad) return;
+  const maskin = allaMaskiner().find(m => m.id === rad.ovning);
+  const namn = maskin ? maskin.namn : rad.ovning;
+
+  // Detaljraden återger vad som försvinner, så man ser om man tagit fel rad.
+  const delar = [];
+  if (harVarde(rad.set) && harVarde(rad.reps)) delar.push(`${rad.set} × ${rad.reps}`);
+  else if (harVarde(rad.set)) delar.push(`${rad.set} set`);
+  else if (harVarde(rad.reps)) delar.push(`${rad.reps} reps`);
+  if (harVarde(rad.vikt)) delar.push(`${rad.vikt} kg`);
+  if (rad.notering) delar.push(`"${rad.notering}"`);
+  const detalj = delar.length ? delar.join(" · ") : "Ingen ytterligare uppgift på raden.";
+
+  bekrafta(`Ta bort "${namn}" från ${rad.datum}?`, detalj, "Ta bort raden", () => {
+    sparaPass(lasPass().filter(p => p.id !== id));
+    if (redigerarId === id) avslutaRedigering();
+    renderaAllt();
+  });
 }
 
 function taBortPassTyp(id) {

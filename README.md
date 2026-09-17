@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **2.0** — kontrollfråga även när en historikrad tas bort; frågan återger vad
+  raden innehåller så man ser om man tryckt på fel rad. Säkerhetskopiering
+  flyttad längst ned, under Moment. (Numret hoppar till 2.0 i stället för 1.10,
+  som annars lätt läses som en lägre version än 1.9.)
 - **1.9** — kontrollfråga innan en passtyp eller ett moment tas bort. Frågan
   säger hur många loggade rader som använder momentet, så man vet vad man
   förlorar. Avbryts med Behåll, Escape eller ett klick utanför rutan.

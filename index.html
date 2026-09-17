@@ -25,7 +25,7 @@
       <ol>
         <li><strong>Bannern</strong> högst upp visar vilket styrketräningspass som står på tur — den växlar bara mellan A och B. Egna passtyper som löpning och promenad ingår inte i turordningen; dem väljer du när du vill. Har du redan loggat något idag visar bannern i stället vilket pass du håller på med. Passtypen i formuläret står kvar tills du byter den själv.</li>
         <li><strong>Logga ett pass:</strong> välj passtyp och moment (listan visar bara moment för vald passtyp) och tryck på <em>Logga pass</em>. Datumet är förifyllt med dagens datum. Set, reps och vikt är frivilliga — lämna dem tomma när de inte passar, till exempel på en löprunda, så utelämnas de ur historiken.</li>
-        <li><strong>Historiken</strong> visar dina loggade pass, nyast först. Tryck på ✎ för att ändra en rad i efterhand — den öppnas i formuläret ovanför och du kan rätta allt, även datum och notering. Tryck på ✕ för att ta bort raden. Statistiken uppdateras direkt.</li>
+        <li><strong>Historiken</strong> visar dina loggade pass, nyast först. Tryck på ✎ för att ändra en rad i efterhand — den öppnas i formuläret ovanför och du kan rätta allt, även datum och notering. Tryck på ✕ för att ta bort raden — du får en kontrollfråga som visar vad raden innehåller. Statistiken uppdateras direkt.</li>
         <li><strong>Säkerhetskopiering:</strong> all data finns bara i den här telefonen. Under <em>Säkerhetskopiering</em> sparar du en kopia som fil (eller kopierar den som text, om nedladdningen krånglar) och kan läsa tillbaka den senare. Att läsa in en kopia ersätter allt som finns i telefonen, så du får bekräfta först.</li>
         <li><strong>Egna passtyper:</strong> under <em>Passtyper</em> kan du lägga till helt nya pass (t.ex. "Kondition"). De får automatiskt nästa bokstav (C, D …) och en egen färg, och dyker upp i alla listor. Egna passtyper tas bort med ✕ på sin bricka — så länge de inte används av loggade pass eller moment.</li>
         <li><strong>Avsnitten är hopfällda</strong> när appen startar — utom <em>Logga pass</em>, som du använder oftast. Tryck på en rubrik för att fälla ut eller ihop den. Trycker du på en momentbild eller på ✎ i historiken fälls <em>Logga pass</em> ut automatiskt om du fällt ihop den.</li>
@@ -100,25 +100,6 @@
       </form>
     </details>
 
-    <details class="kort sektion" id="data-sektion">
-      <summary><h2>Säkerhetskopiering</h2></summary>
-      <p class="tom-text" style="text-align:left">
-        All din träningsdata finns bara i den här telefonen. Spara en kopia då
-        och då, så kan du läsa tillbaka den om telefonen krånglar eller byts.
-      </p>
-      <div class="knapprad">
-        <button type="button" class="sekundar" id="exportera">Spara kopia som fil</button>
-        <button type="button" class="sekundar" id="kopiera">Kopiera som text</button>
-      </div>
-
-      <h3>Läs tillbaka en kopia</h3>
-      <div class="falt">
-        <label for="import-fil">Välj en sparad fil</label>
-        <input type="file" id="import-fil" accept="application/json,.json">
-      </div>
-      <div id="import-forhandsvisning" hidden></div>
-      <p id="data-medd" class="medd" hidden></p>
-    </details>
 
     <details class="kort sektion" id="maskiner-sektion">
       <summary><h2>Moment</h2></summary>
@@ -144,6 +125,26 @@
         <button type="submit" class="primar">Lägg till moment</button>
       </form>
     </details>
+    <details class="kort sektion" id="data-sektion">
+      <summary><h2>Säkerhetskopiering</h2></summary>
+      <p class="tom-text" style="text-align:left">
+        All din träningsdata finns bara i den här telefonen. Spara en kopia då
+        och då, så kan du läsa tillbaka den om telefonen krånglar eller byts.
+      </p>
+      <div class="knapprad">
+        <button type="button" class="sekundar" id="exportera">Spara kopia som fil</button>
+        <button type="button" class="sekundar" id="kopiera">Kopiera som text</button>
+      </div>
+
+      <h3>Läs tillbaka en kopia</h3>
+      <div class="falt">
+        <label for="import-fil">Välj en sparad fil</label>
+        <input type="file" id="import-fil" accept="application/json,.json">
+      </div>
+      <div id="import-forhandsvisning" hidden></div>
+      <p id="data-medd" class="medd" hidden></p>
+    </details>
+
   </main>
 
   <div id="bekrafta" class="bekrafta" hidden role="alertdialog" aria-modal="true" aria-labelledby="bekrafta-text">

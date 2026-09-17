@@ -10,7 +10,7 @@
 // * Bilder och ikoner hämtas CACHE FÖRST. De ändras aldrig, och de är tunga.
 //
 // CACHE_VERSION ska alltid matcha APP_VERSION i script.js — höj båda samtidigt.
-const CACHE_VERSION = "traningsappen-v1.9";
+const CACHE_VERSION = "traningsappen-v2.0";
 const NAT_TIMEOUT_MS = 3000;
 
 // Filer som alltid ska hämtas färska när nät finns.
