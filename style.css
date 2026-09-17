@@ -491,3 +491,77 @@ button.sekundar:hover {
   padding: 6px 10px;
   white-space: pre-wrap;
 }
+
+/* ===== Redigering av en loggad rad ===== */
+
+.redigera {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-svag);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.redigera:hover {
+  background: var(--bakgrund);
+  color: var(--text);
+}
+
+#historik li.redigeras {
+  background: #fff8e1;
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.redigerar-medd {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff8e1;
+  border-left: 3px solid #f9a825;
+  font-size: 0.9rem;
+}
+
+#avbryt-redigering {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ===== Säkerhetskopiering ===== */
+
+.knapprad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.knapprad button {
+  flex: 1 1 auto;
+  min-width: 140px;
+}
+
+#import-forhandsvisning {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--kant);
+  border-radius: 10px;
+  background: var(--bakgrund);
+}
+
+.medd.ok {
+  color: var(--farg-0);
+}
+
+.medd.fel {
+  color: #c62828;
+}

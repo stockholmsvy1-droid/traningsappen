@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.5** — säkerhetskopiering: exportera all data till en JSON-fil (eller till
+  urklipp som reserv på iOS) och läs tillbaka den igen. Historiken går att
+  redigera i efterhand — ✎ på en rad öppnar den i loggningsformuläret, och
+  radens id behålls så inget dubbleras.
 - **1.4** — rättar att appen kunde fastna på en gammal version. Service
   workern var cache-först för allt, även HTML och JS, så en hemskärmsapp
   fortsatte servera gammal kod. Nu hämtas appens egna filer nätverk först med
