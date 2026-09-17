@@ -28,18 +28,13 @@
         <li><strong>Historiken</strong> visar dina loggade pass, nyast först. Tryck på ✎ för att ändra en rad i efterhand — den öppnas i formuläret ovanför och du kan rätta allt, även datum och notering. Tryck på ✕ för att ta bort raden. Statistiken uppdateras direkt.</li>
         <li><strong>Säkerhetskopiering:</strong> all data finns bara i den här telefonen. Under <em>Säkerhetskopiering</em> sparar du en kopia som fil (eller kopierar den som text, om nedladdningen krånglar) och kan läsa tillbaka den senare. Att läsa in en kopia ersätter allt som finns i telefonen, så du får bekräfta först.</li>
         <li><strong>Egna passtyper:</strong> under <em>Passtyper</em> kan du lägga till helt nya pass (t.ex. "Kondition"). De får automatiskt nästa bokstav (C, D …) och en egen färg, och dyker upp i alla listor. Egna passtyper tas bort med ✕ på sin bricka — så länge de inte används av loggade pass eller moment.</li>
-        <li><strong>Alla avsnitt är hopfällda</strong> när appen startar, så du ser hela innehållsförteckningen direkt. Tryck på en rubrik för att fälla ut eller ihop den. Trycker du på en momentbild eller på ✎ i historiken fälls <em>Logga pass</em> ut automatiskt.</li>
+        <li><strong>Avsnitten är hopfällda</strong> när appen startar — utom <em>Logga pass</em>, som du använder oftast. Tryck på en rubrik för att fälla ut eller ihop den. Trycker du på en momentbild eller på ✎ i historiken fälls <em>Logga pass</em> ut automatiskt om du fällt ihop den.</li>
         <li><strong>Moment:</strong> ett moment är en maskin, en övning eller en aktivitet — Leg Extension, stretching eller en löprunda. Tryck på momentets namn för att visa eller dölja dess bild, eller använd knappen <em>Visa alla bilder</em>. Tryck på <strong>själva bilden</strong> för att hoppa upp till loggningen med momentet redan valt. Du kan lägga till egna moment, med eller utan bild, och ta bort ett moment med ✕-knappen på dess kort — borttagningen sparas permanent.</li>
         <li>All data sparas lokalt i webbläsaren (localStorage) och finns kvar när du laddar om sidan.</li>
       </ol>
     </details>
 
-    <details class="kort sektion" id="statistik">
-      <summary><h2>Statistik</h2></summary>
-      <div class="stat-grid" id="stat-grid"></div>
-    </details>
-
-    <details class="kort sektion" id="loggning">
+    <details class="kort sektion" id="loggning" open>
       <summary><h2 id="loggning-rubrik">Logga pass</h2></summary>
       <p id="redigerar-medd" class="redigerar-medd" hidden></p>
       <form id="logg-form">
@@ -77,6 +72,11 @@
         <button type="submit" class="primar" id="logg-knapp">Logga pass</button>
         <button type="button" class="sekundar" id="avbryt-redigering" hidden>Avbryt ändringen</button>
       </form>
+    </details>
+
+    <details class="kort sektion" id="statistik">
+      <summary><h2>Statistik</h2></summary>
+      <div class="stat-grid" id="stat-grid"></div>
     </details>
 
     <details class="kort sektion" id="historik-sektion">

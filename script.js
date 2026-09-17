@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.6";
+const APP_VERSION = "1.7";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.

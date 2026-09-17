@@ -38,6 +38,8 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.7** — Logga pass är öppen från start igen (den används oftast och kostade
+  ett extra tryck per appstart), och Statistik har flyttats ned under den.
 - **1.6** — alla avsnitt är hopfällda när appen startar, så startskärmen blir en
   innehållsförteckning i stället för en lång rulle. Statistik och Logga pass är
   numera också hopfällbara. Logga pass fälls ut automatiskt när man trycker på
