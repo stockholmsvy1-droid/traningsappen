@@ -38,6 +38,10 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.9** — kontrollfråga innan en passtyp eller ett moment tas bort. Frågan
+  säger hur många loggade rader som använder momentet, så man vet vad man
+  förlorar. Avbryts med Behåll, Escape eller ett klick utanför rutan.
+  Historikrader tas fortfarande bort direkt med ✕.
 - **1.8** — bannern heter "Nästa styrketräningspass" och roterar bara mellan A
   och B. Egna passtyper (löpning, promenad, stretching, hemmaövningar) ingår
   inte längre i turordningen och stör den inte heller när de loggas emellan.

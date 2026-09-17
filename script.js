@@ -1,7 +1,7 @@
 // ===== Version =====
 // Höj vid varje ändring som publiceras. CACHE_VERSION i sw.js ska ha
 // SAMMA nummer, annars fortsätter telefonen visa den gamla versionen.
-const APP_VERSION = "1.8";
+const APP_VERSION = "1.9";
 
 // ===== Passtyper =====
 // A och B är standard; egna passtyper sparas i localStorage och får nästa lediga bokstav.
@@ -471,6 +471,41 @@ function renderaAllt() {
   uppdateraBildToggleKnapp();
 }
 
+// ===== Kontrollfråga före borttagning =====
+// En gemensam ruta i stället för webbläsarens confirm(), så att frågan kan
+// säga vad borttagningen faktiskt får för följder.
+let bekraftaCallback = null;
+
+function bekrafta(fraga, detalj, knapptext, vidJa) {
+  document.getElementById("bekrafta-text").textContent = fraga;
+  const detaljRad = document.getElementById("bekrafta-detalj");
+  detaljRad.textContent = detalj || "";
+  detaljRad.hidden = !detalj;
+  document.getElementById("bekrafta-ja").textContent = knapptext;
+  bekraftaCallback = vidJa;
+  document.getElementById("bekrafta").hidden = false;
+  document.getElementById("bekrafta-nej").focus();
+}
+
+function stangBekrafta() {
+  document.getElementById("bekrafta").hidden = true;
+  document.getElementById("bekrafta-detalj").hidden = true;
+  bekraftaCallback = null;
+}
+
+document.getElementById("bekrafta-ja").addEventListener("click", () => {
+  const gor = bekraftaCallback;
+  stangBekrafta();
+  if (gor) gor();
+});
+document.getElementById("bekrafta-nej").addEventListener("click", stangBekrafta);
+document.getElementById("bekrafta").addEventListener("click", e => {
+  if (e.target.id === "bekrafta") stangBekrafta(); // klick utanför rutan avbryter
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !document.getElementById("bekrafta").hidden) stangBekrafta();
+});
+
 // ===== Redigera en loggad rad =====
 // Redigering återanvänder loggningsformuläret i stället för ett eget
 // formulär: samma fält, samma validering, mindre som kan gå isär.
@@ -528,17 +563,34 @@ function taBortPassTyp(id) {
   const antalMaskiner = allaMaskiner().filter(m => m.pass === id).length;
   if (antalPass > 0 || antalMaskiner > 0) {
     const delar = [];
-    if (antalPass > 0) delar.push(antalPass + " loggade pass");
-    if (antalMaskiner > 0) delar.push(antalMaskiner + " maskiner");
+    if (antalPass > 0) delar.push(antalPass + (antalPass === 1 ? " loggad rad" : " loggade rader"));
+    if (antalMaskiner > 0) delar.push(antalMaskiner + (antalMaskiner === 1 ? " moment" : " moment"));
     visaPassTypMedd(`Passtyp ${id} används av ${delar.join(" och ")}. Ta bort dem först.`);
     return;
   }
-  sparaEgnaPassTyper(lasEgnaPassTyper().filter(t => t.id !== id));
-  visaPassTypMedd("");
-  renderaAllt();
+  bekrafta(`Ta bort passtypen "${passEtikett(id)}"?`,
+           "Passtypen används inte av några loggade rader eller moment, så inget annat påverkas.",
+           "Ta bort passtypen",
+           () => {
+             sparaEgnaPassTyper(lasEgnaPassTyper().filter(t => t.id !== id));
+             visaPassTypMedd("");
+             renderaAllt();
+           });
 }
 
 function taBortMaskin(id) {
+  const maskin = allaMaskiner().find(m => m.id === id);
+  if (!maskin) return;
+  const antal = lasPass().filter(p => p.ovning === id).length;
+  const detalj = antal === 0
+    ? "Momentet används inte i någon loggad rad."
+    : `${antal} loggade ${antal === 1 ? "rad" : "rader"} använder momentet. ` +
+      "De ligger kvar i historiken, men visar då bara momentets id i stället för namnet.";
+  bekrafta(`Ta bort momentet "${maskin.namn}"?`, detalj, "Ta bort momentet",
+           () => genomforTaBortMaskin(id));
+}
+
+function genomforTaBortMaskin(id) {
   const egna = lasEgnaMaskiner();
   if (egna.some(m => m.id === id)) {
     // Egen maskin: raderas permanent ur localStorage
