@@ -38,6 +38,12 @@ telefonen visa den gamla versionen även efter push.
 
 ## Versionshistorik
 
+- **1.4** — rättar att appen kunde fastna på en gammal version. Service
+  workern var cache-först för allt, även HTML och JS, så en hemskärmsapp
+  fortsatte servera gammal kod. Nu hämtas appens egna filer nätverk först med
+  3 sekunders timeout (bilder är fortfarande cache-först), appen laddar om sig
+  själv en gång när en ny version aktiverats, och en enskild bild som inte går
+  att hämta sänker inte längre hela installationen.
 - **1.3** — momenten sorteras efter passtyp (A, B, C …) i stället för att egna
   tillägg hamnar sist i skapandeordning. Inom varje passtyp ligger det senast
   tillagda momentet sist.

@@ -125,10 +125,28 @@
 
   <script src="script.js"></script>
   <script>
-    // Registrerar service worker så appen fungerar offline i gymmet.
+    // Registrerar service worker så appen fungerar offline i gymmet, och
+    // laddar om en gång automatiskt när en ny version tagit över — annars
+    // kan en hemskärmsapp bli inlåst på en gammal version.
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js").catch(function () {});
+        // Fanns det redan en service worker som styrde sidan? I så fall är en
+        // ny som aktiveras en UPPDATERING, och då laddar vi om så att den nya
+        // koden syns direkt. Vid allra första installationen finns ingen
+        // tidigare — då vore en omladdning bara ett onödigt hopp.
+        var hadeTidigare = Boolean(navigator.serviceWorker.controller);
+        navigator.serviceWorker.register("sw.js").then(function (reg) {
+          reg.update();
+          reg.addEventListener("updatefound", function () {
+            var ny = reg.installing;
+            if (!ny) return;
+            ny.addEventListener("statechange", function () {
+              if (ny.state === "activated" && hadeTidigare) {
+                window.location.reload();
+              }
+            });
+          });
+        }).catch(function () {});
       });
     }
   </script>
